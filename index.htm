@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>concentric circles</title>
+  <style>
+    #map {
+      height: 400px;
+      width: 600px;
+    }
+  </style>
+  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
+  <script>
+
+function initMap() {
+  map = new google.maps.Map(document.getElementById("map"), {
+    center: { lat: 35.6895, lng: 139.6917 }, // 例：東京タワー
+    zoom: 10,
+  });
+
+  // 同心円の中心座標
+  const center = { lat: 35.6895, lng: 139.6917 };
+
+  // 同心円の半径（メートル単位）
+  const radii = [1000, 2000, 3000];
+
+  // 同心円の描画
+  radii.forEach((radius) => {
+    new google.maps.Circle({
+      map: map,
+      center: center,
+      radius: radius,
+      fillColor: "rgba(0, 0, 255, 0.2)", // 色と透明度を調整
+      strokeColor: "blue",
+      strokeOpacity: 0.8,
+      strokeWeight: 2,
+    });
+  });
+}
+
+  </script>
+</head>
+<body>
+  <div id="map"></div>
+</body>
+</html>
