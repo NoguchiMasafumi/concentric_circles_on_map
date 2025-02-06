@@ -1,45 +1,47 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>concentric circles</title>
-  <style>
-    #map {
-      height: 400px;
-      width: 600px;
-    }
-  </style>
-  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
-  <script>
-
-function initMap() {
-  map = new google.maps.Map(document.getElementById("map"), {
-    center: { lat: 35.6895, lng: 139.6917 }, // 例：東京タワー
-    zoom: 10,
-  });
-
-  // 同心円の中心座標
-  const center = { lat: 35.6895, lng: 139.6917 };
-
-  // 同心円の半径（メートル単位）
-  const radii = [1000, 2000, 3000];
-
-  // 同心円の描画
-  radii.forEach((radius) => {
-    new google.maps.Circle({
-      map: map,
-      center: center,
-      radius: radius,
-      fillColor: "rgba(0, 0, 255, 0.2)", // 色と透明度を調整
-      strokeColor: "blue",
-      strokeOpacity: 0.8,
-      strokeWeight: 2,
-    });
-  });
-}
-
-  </script>
+<title>concentric circles on map</title>
+<style>
+  #map-container {
+    position: relative;
+    width: 600px;
+    height: 450px;
+  }
+  #map-iframe {
+    width: 100%;
+    height: 100%;
+  }
+  .circle {
+    position: absolute;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 255, 0.2);
+    border: 2px solid blue;
+    z-index: 1; /* iframeより前面に表示 */
+  }
+</style>
 </head>
 <body>
-  <div id="map"></div>
+
+<div id="map-container">
+  <iframe id="map-iframe" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d25919.998575083842!2d139.68859768548967!3d35.701621995606985!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60188d2059b7fd4b%3A0xec61c68fe232efd2!2z5p2x5Lqs6YO95paw5a6_5Yy6!5e0!3m2!1sja!2sjp!4v1738819604009!5m2!1sja!2sjp" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+</div>
+
+<script>
+  const mapContainer = document.getElementById('map-container');
+  const radii = [100, 200, 300]; // 円の半径
+
+  radii.forEach(radius => {
+    const circle = document.createElement('div');
+    circle.classList.add('circle');
+    circle.style.width = `${radius}px`;
+    circle.style.height = `${radius}px`;
+    circle.style.top = '50%';
+    circle.style.left = '50%';
+    circle.style.transform = 'translate(-50%, -50%)';
+    mapContainer.appendChild(circle);
+  });
+</script>
+
 </body>
 </html>
